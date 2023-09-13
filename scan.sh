@@ -1,16 +1,8 @@
 #!/bin/bash
 
-# Check if a directory argument is provided
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <directory>"
-    exit 1
-fi
-
-DIR="$1"
-
-# Ensure the directory exists
-if [ ! -d "$DIR" ]; then
-    echo "Error: $DIR is not a valid directory."
+# Check if at least one directory argument is provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <directory1> [<directory2> ...]"
     exit 1
 fi
 
@@ -28,5 +20,13 @@ function scan_and_print() {
     done
 }
 
-# Start the scan from the given directory
-scan_and_print "$DIR"
+# Loop through all provided directories and start the scan
+for DIR in "$@"; do
+    # Ensure the directory exists
+    if [ ! -d "$DIR" ]; then
+        echo "Error: $DIR is not a valid directory."
+        exit 1
+    fi
+
+    scan_and_print "$DIR"
+done
