@@ -28,13 +28,15 @@ def filter_directories(dirs, ignore_strings, ignore_hidden):
         dirs[:] = [d for d in dirs if not d.startswith('.')]
     dirs[:] = [d for d in dirs if not any(ig in d for ig in ignore_strings)]
 
-def should_print_file(file, file_filters, ignore_strings, ignore_hidden):
+def should_print_file(file_path, file_filters, ignore_strings, ignore_hidden, include_strings):
     """Determine if a file should be printed based on filters."""
-    if ignore_hidden and file.startswith('.'):
+    if ignore_hidden and os.path.basename(file_path).startswith('.'):
         return False
-    if file_filters and not any(file.endswith(file_type) for file_type in file_filters):
+    if file_filters and not any(file_path.endswith(file_type) for file_type in file_filters):
         return False
-    if any(ignore_str in file for ignore_str in ignore_strings):
+    if any(ignore_str in file_path for ignore_str in ignore_strings):
+        return False
+    if include_strings and not any(include_str in file_path for include_str in include_strings):
         return False
     return True
 
@@ -58,12 +60,12 @@ def print_file_content(file_path, no_comments, compress):
         print(f"Warning: Could not read file due to encoding issues: {file_path}")
         exit(1)
 
-def handle_directory(directory, file_filters, ignore_strings, ignore_hidden, verbose, no_comments, compress):
+def handle_directory(directory, file_filters, ignore_strings, ignore_hidden, verbose, no_comments, compress, strings):
     """Handle scanning and printing for directories."""
     for root, dirs, files in os.walk(directory):
         filter_directories(dirs, ignore_strings, ignore_hidden)
         for file in files:
-            if should_print_file(file, file_filters, ignore_strings, ignore_hidden):
+            if should_print_file(os.path.join(root, file), file_filters, ignore_strings, ignore_hidden, strings):
                 print_file_content(os.path.join(root, file), no_comments, compress)
             elif verbose:
                 print(f"Skipped file: {file}")
@@ -80,12 +82,13 @@ def main():
     parser.add_argument("--ignore-hidden", action='store_true', help="Ignore hidden directories and files.")
     parser.add_argument("-v", "--verbose", action='store_true', help="Enable verbose mode.")
     parser.add_argument("--no-comments", action='store_true', help="Remove comments from the displayed content based on file type.")
+    parser.add_argument("-s", "--strings", nargs='+', default=[], help="Only display files whose paths contain one of these strings.")
     parser.add_argument("--compress", action='store_true', help="Compress code (for Python files).")
     args = parser.parse_args()
 
     for path in args.paths:
         if os.path.isdir(path):
-            handle_directory(path, args.filetype, args.ignore, args.ignore_hidden, args.verbose, args.no_comments, args.compress)
+            handle_directory(path, args.filetype, args.ignore, args.ignore_hidden, args.verbose, args.no_comments, args.compress, args.strings)
         elif os.path.isfile(path):
             handle_file(path, args.filetype, args.ignore, args.ignore_hidden, args.no_comments, args.compress)
         else:
