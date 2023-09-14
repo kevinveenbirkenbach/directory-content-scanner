@@ -15,31 +15,31 @@ class CodeProcessor:
         """Remove comments based on file type."""
         comment_patterns = {
             CodeProcessor.PYTHON: [
-                (r'^\s*#.*\n?', ''),
-                (r'\"\"\"(.*?)\"\"\"', ''),
-                (r"\'\'\'(.*?)\'\'\'", '')
+                (r'\s*#.*', '',0),
+                (r'\"\"\"(.*?)\"\"\"', '', re.DOTALL),
+                (r"\'\'\'(.*?)\'\'\'", '', re.DOTALL)
             ],
             CodeProcessor.JS: [
-                (r'\s*//.*', ''),
-                (r'/\*.*?\*/', '')
+                (r'\s*//.*', '',0),
+                (r'/\*.*?\*/', '',0)
             ],
             CodeProcessor.C: [
-                (r'\s*//.*', ''),
-                (r'/\*.*?\*/', '')
+                (r'\s*//.*', '',0),
+                (r'/\*.*?\*/', '',0)
             ],
             CodeProcessor.CPP: [
-                (r'\s*//.*', ''),
-                (r'/\*.*?\*/', '')
+                (r'\s*//.*', '',0),
+                (r'/\*.*?\*/', '',0)
             ],
             CodeProcessor.H: [
-                (r'\s*//.*', ''),
-                (r'/\*.*?\*/', '')
+                (r'\s*//.*', '',0),
+                (r'/\*.*?\*/', '',0)
             ]
         }
 
         patterns = comment_patterns.get(file_type, [])
-        for pattern, repl in patterns:
-            content = re.sub(pattern, repl, content, flags=re.DOTALL)
+        for pattern, repl, flags in patterns:
+            content = re.sub(pattern, repl, content, flags=flags)
         return content.strip()
 
     @staticmethod
