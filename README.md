@@ -1,59 +1,57 @@
 # Directory Content Scanner
 
-Directory Content Scanner is a tool designed for the recursive scanning of directories, providing outputs for both file paths and their associated content. This tool is especially handy for rapid content exploration and debugging within nested file structures.
+The Directory Content Scanner is a Python-based utility designed to recursively scan directories, presenting both file paths and their content. It's an invaluable tool for in-depth content exploration and debugging within nested file structures.
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 
-- Bash shell (commonly available on Linux and macOS)
+- Python 3.x
 
-### Installation
+### 🛠️ Installation
 
-1. Clone this repository:
-   ```
+1. Clone the repository:
+   ```bash
    git clone https://github.com/kevinveenbirkenbach/directory-content-scanner.git
    ```
 
 2. Navigate to the cloned directory:
-   ```
+   ```bash
    cd directory-content-scanner
    ```
 
-3. Make the script executable:
-   ```
-   chmod +x scan.sh
-   ```
+## 📖 Usage
 
-## Usage
+Run the Python script, specifying the target directory and any desired filters:
 
-Run the script with a directory as its argument:
-
-```
-./scan.sh /path/to/directory
+```bash
+python3 scan.py /path/to/directory [options]
 ```
 
-This will print each file's path followed by its content, separated by equal signs for clarity.
+### Options:
+- `-f, --filetype`: Filter by file types (e.g., `.txt`, `.log`).
+- `-i, --ignore`: Ignore files and folders containing specific strings.
+- `--ignore-hidden`: Omit hidden directories from the scan.
+- `-v, --verbose`: Enable verbose mode for detailed output.
 
-## Warning
+## ⚠️ Caution
 
-Use this tool responsibly. If some of the target directory files are extensive, the script might produce a vast output. Always be aware of the volume of data you're dealing with before executing the script.
+Exercise caution when scanning directories with large files. The script may produce extensive output. Always assess the data volume before executing the script.
 
-## Contributing
+## 🤝 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Contributions via pull requests are welcome. For significant modifications, kindly open an issue first to discuss the proposed changes.
 
-## Author
+## ✍️ Author
 
-Kevin Veen-Birkenbach  
-- 📧 Email: [kevin@veen.world](mailto:kevin@veen.world)
-- 🌍 Website: [https://www.veen.world/](https://www.veen.world/)
+**Kevin Veen-Birkenbach**  
+- 📧 [Email Kevin](mailto:kevin@veen.world)
+- 🌐 [Website](https://www.veen.world/)
 
-## License
+## 📜 License
 
-This project is licensed under the GNU Affero General Public License v3.0. The full license text is available in the `LICENSE` file of this repository.
+This project is licensed under the GNU Affero General Public License v3.0. The complete license text is available in the `LICENSE` file.
 
-## Acknowledgement
+## 🙏 Acknowledgements
 
-These scripts were created with the assistance of OpenAI's ChatGPT model. You can learn more about how they were created [here](https://chat.openai.com/share/71e9bc9e-d34a-4b03-bf68-4f9e994d156a).
-
+Special thanks to OpenAI's ChatGPT model for assistance. Dive deeper into the creation process [here](https://chat.openai.com/share/71e9bc9e-d34a-4b03-bf68-4f9e994d156a) and [here](https://chat.openai.com/share/3fc66009-ff4e-425e-a4a3-fc703534885d).
