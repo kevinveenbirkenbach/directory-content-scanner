@@ -124,7 +124,8 @@ def main():
         if os.path.isdir(path):
             DirectoryHandler.handle_directory(path, file_filters=args.filetype, ignore_strings=args.ignore, ignore_hidden=args.ignore_hidden, verbose=args.verbose, no_comments=args.no_comments, compress=args.compress, strings=args.strings)
         elif os.path.isfile(path):
-            DirectoryHandler.handle_file(path, file_filters=args.filetype, ignore_strings=args.ignore, ignore_hidden=args.ignore_hidden, no_comments=args.no_comments, compress=args.compress)
+            if DirectoryHandler.should_print_file(path, file_filters=args.filetype, ignore_strings=args.ignore, ignore_hidden=args.ignore_hidden, include_strings=args.strings):
+                DirectoryHandler.handle_file(path, file_filters=args.filetype, ignore_strings=args.ignore, ignore_hidden=args.ignore_hidden, no_comments=args.no_comments, compress=args.compress)
         else:
             print(f"Error: {path} is neither a valid file nor a directory.")
             exit(1)
