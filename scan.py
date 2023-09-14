@@ -9,14 +9,23 @@ def filter_directories(dirs, ignore_strings, ignore_hidden, verbose):
     if verbose:
         print(f"Filtered directories: {dirs}")
 
-def should_print_file(file, file_filters, ignore_strings):
+def should_print_file(file, file_filters, ignore_strings, ignore_hidden):
     """Determine if a file should be printed based on filters."""
     
+    # Ignore hidden files
+    if ignore_hidden and file.startswith('.'):
+        return False
+
+    # Filter by file type
     if file_filters:
         if not any(file.endswith(file_type) for file_type in file_filters):
             return False
 
-    return not any(ignore_str in file for ignore_str in ignore_strings)
+    # Ignore files based on ignore_strings
+    if any(ignore_str in file for ignore_str in ignore_strings):
+        return False
+
+    return True
 
 
 def scan_and_print(directory, file_filters, ignore_strings, ignore_hidden, verbose):
@@ -24,7 +33,7 @@ def scan_and_print(directory, file_filters, ignore_strings, ignore_hidden, verbo
         filter_directories(dirs, ignore_strings, ignore_hidden, verbose)
         
         for file in files:
-            if should_print_file(file, file_filters, ignore_strings):
+            if should_print_file(file, file_filters, ignore_strings, ignore_hidden):
                 file_path = os.path.join(root, file)
                 try:
                     with open(file_path, 'r') as f:
