@@ -79,14 +79,14 @@ class DirectoryHandler:
             if no_comments:
                 file_type = os.path.splitext(file_path)[1]
                 content = CodeProcessor.remove_comments(content, file_type)
-            print(f"======== File Path: {file_path} ========")
+            print(f"<< START: {file_path} >>")
             if compress:
                 compressed_content = CodeProcessor.compress(content)
-                print(f"======== Compressed Code ========")
+                print(f"COMPRESSED CODE: ")
                 print(compressed_content)
             else:
                 print(content)
-            print("==================================\n")
+            print("<< END >>\n")
         except UnicodeDecodeError:
             print(f"Warning: Could not read file due to encoding issues: {file_path}")
             exit(1)
