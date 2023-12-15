@@ -29,10 +29,12 @@ python3 scan.py /path/to/directory [options]
 ```
 
 ### Options:
-- `-f, --filetype`: Filter by file types (e.g., `.txt`, `.log`).
-- `-i, --ignore`: Ignore files and folders containing specific strings.
-- `--ignore-hidden`: Omit hidden directories from the scan.
-- `-v, --verbose`: Enable verbose mode for detailed output.
+
+To show the help page execute:
+
+```bash
+python3 scan.py /path/to/directory --help
+```
 
 ## ⚠️ Caution
 
