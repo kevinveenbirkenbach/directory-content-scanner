@@ -58,9 +58,9 @@ class DirectoryHandler:
         dirs[:] = [d for d in dirs if not any(ig in d for ig in ignore_file_strings)]
 
     @staticmethod
-    def file_name_or_content_contains(file_path, file_name_contains, content_contains):
+    def path_or_content_contains(file_path, path_contains, content_contains):
         # Check if the file name contains specific strings (whitelist)
-        if file_name_contains and any(whitelist_str in file_path for whitelist_str in file_name_contains):
+        if path_contains and any(whitelist_str in file_path for whitelist_str in path_contains):
             return True
 
         # Check file content for specific strings (if specified)
@@ -77,7 +77,7 @@ class DirectoryHandler:
         return False
 
     @staticmethod
-    def should_print_file(file_path, file_types, ignore_file_strings, ignore_hidden, file_name_contains, content_contains):
+    def should_print_file(file_path, file_types, ignore_file_strings, ignore_hidden, path_contains, content_contains):
         """
         Determine if a file should be printed based on various criteria.
 
@@ -86,7 +86,7 @@ class DirectoryHandler:
         file_types (list): List of allowed file extensions.
         ignore_file_strings (list): List of strings; if any are found in the file path, the file is ignored.
         ignore_hidden (bool): If True, hidden files (starting with '.') are ignored.
-        file_name_contains (list): List of strings; the file is processed only if its path contains one of these strings.
+        path_contains (list): List of strings; the file is processed only if its path contains one of these strings.
         content_contains (list): List of strings; the file is processed only if its content contains one of these strings.
 
         Returns:
@@ -105,7 +105,7 @@ class DirectoryHandler:
         if any(ignore_str in file_path for ignore_str in ignore_file_strings):
             return False
 
-        return DirectoryHandler.file_name_or_content_contains(file_path, file_name_contains, content_contains)
+        return DirectoryHandler.path_or_content_contains(file_path, path_contains, content_contains)
     
     @staticmethod
     def print_file_content(file_path, no_comments, compress):
@@ -134,7 +134,7 @@ class DirectoryHandler:
         for root, dirs, files in os.walk(directory):
             DirectoryHandler.filter_directories(dirs, kwargs['ignore_file_strings'], kwargs['ignore_hidden'])
             for file in files:
-                if DirectoryHandler.should_print_file(os.path.join(root, file), kwargs['file_types'], kwargs['ignore_file_strings'], kwargs['ignore_hidden'], kwargs['file_name_contains'], kwargs['content_contains']):
+                if DirectoryHandler.should_print_file(os.path.join(root, file), kwargs['file_types'], kwargs['ignore_file_strings'], kwargs['ignore_hidden'], kwargs['path_contains'], kwargs['content_contains']):
                     DirectoryHandler.print_file_content(os.path.join(root, file), kwargs['no_comments'], kwargs['compress'])
                 elif kwargs['verbose']:
                     print(f"Skipped file: {file}")
@@ -154,16 +154,16 @@ def main():
     parser.add_argument("-v", "--verbose", action='store_true', help="Enable verbose mode.")
     parser.add_argument("--no-comments", action='store_true', help="Remove comments from the displayed content based on file type.")
     parser.add_argument("--compress", action='store_true', help="Compress code (for Python files).")
-    parser.add_argument("--file-name-contains", nargs='+', default=[], help="Display files whose paths contain one of these strings.")
+    parser.add_argument("--path-contains", nargs='+', default=[], help="Display files whose paths contain one of these strings.")
     parser.add_argument("--content-contains", nargs='+', default=[], help="Display files containing one of these strings in their content.")
     
     args = parser.parse_args()
     
     for path in args.paths:
         if os.path.isdir(path):
-            DirectoryHandler.handle_directory(path, file_types=args.file_types, ignore_file_strings=args.ignore_file_strings, ignore_hidden=args.ignore_hidden, verbose=args.verbose, no_comments=args.no_comments, compress=args.compress, file_name_contains=args.file_name_contains, content_contains=args.content_contains)
+            DirectoryHandler.handle_directory(path, file_types=args.file_types, ignore_file_strings=args.ignore_file_strings, ignore_hidden=args.ignore_hidden, verbose=args.verbose, no_comments=args.no_comments, compress=args.compress, path_contains=args.path_contains, content_contains=args.content_contains)
         elif os.path.isfile(path):
-            if DirectoryHandler.should_print_file(path, file_types=args.file_types, ignore_file_strings=args.ignore_file_strings, ignore_hidden=args.ignore_hidden, file_name_contains=args.file_name_contains, content_contains=args.content_contains):
+            if DirectoryHandler.should_print_file(path, file_types=args.file_types, ignore_file_strings=args.ignore_file_strings, ignore_hidden=args.ignore_hidden, path_contains=args.path_contains, content_contains=args.content_contains):
                 DirectoryHandler.handle_file(path, file_types=args.file_types, ignore_file_strings=args.ignore_file_strings, ignore_hidden=args.ignore_hidden, no_comments=args.no_comments, compress=args.compress)
         else:
             print(f"Error: {path} is neither a valid file nor a directory.")
