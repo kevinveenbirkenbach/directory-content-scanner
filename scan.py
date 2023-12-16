@@ -126,6 +126,24 @@ def main():
     parser.add_argument("--compress", action='store_true', help="Compress code (for Python files).")
     parser.add_argument("--whitelist-file", nargs='+', default=[], help="Only display files whose paths contain one of these strings.")
     parser.add_argument("--whitelist-content", nargs='+', default=[], help="Only display files containing one of these strings in their content.")
+    
+        # Custom section for parameter priority
+    priority_section = """
+Parameter Priority Order for File Selection:
+1. --ignore-hidden: Applied first to filter out hidden files and directories.
+2. --ignore: Applied to ignore files and folders with specified strings.
+3. --whitelist-file: Overrides ignore settings but subject to file type filter.
+4. -f/--filetype: Determines which file types are processed.
+5. --whitelist-content: Filters files based on content after type and ignore checks.
+
+Post-Selection Processing:
+- --no-comments: Removes comments from the content of selected files.
+- --compress: Compresses content of selected files.
+
+Note: Verbose mode (-v/--verbose) provides detailed processing information but does not affect file selection or processing."""
+    parser.epilog = priority_section
+
+    
     args = parser.parse_args()
     
     for path in args.paths:
