@@ -105,7 +105,9 @@ class DirectoryHandler:
         if any(ignore_str in file_path for ignore_str in ignore_file_strings):
             return False
 
-        return DirectoryHandler.path_or_content_contains(file_path, path_contains, content_contains)
+        if path_contains or content_contains:
+            return DirectoryHandler.path_or_content_contains(file_path, path_contains, content_contains)
+        return True
     
     @staticmethod
     def print_file_content(file_path, no_comments, compress):
