@@ -9,6 +9,8 @@ class CodeProcessor:
     C = ".c"
     CPP = ".cpp"
     H = ".h"
+    BASH = ".sh"
+    SHELL = ".bash"
 
     @staticmethod
     def remove_comments(content, file_type):
@@ -34,6 +36,12 @@ class CodeProcessor:
             CodeProcessor.H: [
                 (r'\s*//.*', '',0),
                 (r'/\*.*?\*/', '',0)
+            ],
+            CodeProcessor.BASH: [
+                (r'\s*#.*', '', 0)
+            ],
+            CodeProcessor.SHELL: [
+                (r'\s*#.*', '', 0)
             ]
         }
 
