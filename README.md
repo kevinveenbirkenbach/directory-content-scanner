@@ -20,12 +20,31 @@ The Directory Content Scanner is a Python-based utility designed to recursively 
    cd directory-content-scanner
    ```
 
+### ⚡ Running Without Full Path Specification
+
+To execute the script directly from the terminal without typing the full path, follow these steps:
+
+#### 1. **Make the Script Executable**
+Ensure the script is executable:
+```bash
+chmod +x scan.py
+```
+
+#### 2. **Create a Symbolic Link**
+While inside the repository folder, use the following one-liner to create a symbolic link in a directory included in your `$PATH`:
+
+```bash
+ln -s "$(pwd)/scan.py" ~/.local/bin/scan-directory
+```
+
+This command uses the current directory as the base for the symbolic link and points to `~/.local/bin/scan-directory`.
+
 ## 📖 Usage
 
 Run the Python script, specifying the target directory and any desired filters:
 
 ```bash
-python3 scan.py /path/to/directory [options]
+scan-directory /path/to/directory [options]
 ```
 
 ### Options:
@@ -45,6 +64,7 @@ python3 scan.py /path/to/directory --help
 - `--compress`: Compress code (for supported file types). The content will be displayed in compressed form.
 - `--path-contains`: Display files whose paths contain one of these strings. Useful for narrowing down the scan to specific parts of the directory structure.
 - `--content-contains`: Display files containing one of these strings in their content. The file's content will be checked, and only matching files will be shown.
+
 
 ## ⚠️ Caution
 
@@ -66,4 +86,4 @@ This project is licensed under the GNU Affero General Public License v3.0. The c
 
 ## 🙏 Acknowledgements
 
-Special thanks to OpenAI's ChatGPT model for assistance. Dive deeper into the creation process [here](https://chat.openai.com/share/71e9bc9e-d34a-4b03-bf68-4f9e994d156a), [here](https://chat.openai.com/share/3fc66009-ff4e-425e-a4a3-fc703534885d) and [here](https://chatgpt.com/share/d08724c6-8f65-4b24-9828-e0f895bd1e1d).
+Special thanks to OpenAI's ChatGPT model for assistance. Dive deeper into the creation process [here](https://chat.openai.com/share/71e9bc9e-d34a-4b03-bf68-4f9e994d156a), [here](https://chat.openai.com/share/3fc66009-ff4e-425e-a4a3-fc703534885d), [here](https://chatgpt.com/share/d08724c6-8f65-4b24-9828-e0f895bd1e1d) and [here](https://chatgpt.com/share/674c665d-acf8-800f-bd42-5eb7bd566f1e).
