@@ -1,74 +1,58 @@
-# Directory Content Scanner
+# Analysis-Ready Code (ARC)
 
-The Directory Content Scanner is a Python-based utility designed to recursively scan directories, presenting both file paths and their content. It's an invaluable tool for in-depth content exploration and debugging within nested file structures.
+Analysis-Ready Code (ARC) is a Python-based utility designed to recursively scan directories and transform source code into a format optimized for AI and computer analysis. By stripping comments, filtering specific file types, and optionally compressing content, ARC ensures that your code is clean and ready for automated processing.
 
 ## 🚀 Getting Started
 
 ### 📋 Prerequisites
 
 - Python 3.x
+- [Kevin's Package Manager](https://github.com/kevinveenbirkenbach/package-manager) installed
 
-### 🛠️ Installation
+### 🛠️ Installation via Package Manager
 
-1. Clone the repository:
+ARC is available through the package manager under the alias `arc`. To install it, follow these steps:
+
+1. Ensure that you have Kevin's Package Manager set up on your system. Follow the instructions on [the package manager repository](https://github.com/kevinveenbirkenbach/package-manager) if you haven't done so already.
+2. Install ARC using the package manager:
    ```bash
-   git clone https://github.com/kevinveenbirkenbach/directory-content-scanner.git
+   package-manager install arc
    ```
+   This command will download and install ARC and make it available globally via the alias `arc`.
 
-2. Navigate to the cloned directory:
-   ```bash
-   cd directory-content-scanner
-   ```
+### ⚡ Running ARC
 
-### ⚡ Running Without Full Path Specification
-
-To execute the script directly from the terminal without typing the full path, follow these steps:
-
-#### 1. **Make the Script Executable**
-Ensure the script is executable:
-```bash
-chmod +x scan.py
-```
-
-#### 2. **Create a Symbolic Link**
-While inside the repository folder, use the following one-liner to create a symbolic link in a directory included in your `$PATH`:
+Once installed, you can run ARC directly from the terminal using its alias:
 
 ```bash
-ln -s "$(pwd)/scan.py" ~/.local/bin/scan-directory
+arc /path/to/directory [options]
 ```
-
-This command uses the current directory as the base for the symbolic link and points to `~/.local/bin/scan-directory`.
 
 ## 📖 Usage
 
-Run the Python script, specifying the target directory and any desired filters:
+ARC scans the specified directories and processes source code to prepare it for automated analysis. It can filter by file type, remove comments, and compress the content for efficient processing.
+
+To view the help page and all available options, execute:
 
 ```bash
-scan-directory /path/to/directory [options]
+arc --help
 ```
 
 ### Options:
 
-To show the help page execute:
-
-```bash
-python3 scan.py /path/to/directory --help
-```
-
-- `paths`: List of files or directories to scan. This is a positional argument.
-- `--file-types`: Filter by file types (e.g., `.txt`, `.log`). Only files with these extensions will be processed.
-- `--ignore-file-strings`: Ignore files and folders containing these strings. Useful for excluding specific files or directories.
-- `--ignore-hidden`: Ignore hidden directories and files (those starting with a dot).
-- `-v`, `--verbose`: Enable verbose mode. This will print additional information about skipped files.
-- `--no-comments`: Remove comments from the displayed content based on file type. Comments in supported file types (Python, JS, C, CPP, H) will be stripped.
-- `--compress`: Compress code (for supported file types). The content will be displayed in compressed form.
-- `--path-contains`: Display files whose paths contain one of these strings. Useful for narrowing down the scan to specific parts of the directory structure.
-- `--content-contains`: Display files containing one of these strings in their content. The file's content will be checked, and only matching files will be shown.
-
+- **paths**: List of files or directories to scan. This is a positional argument.
+- **--file-types**: Filter by file types (e.g., `.py`, `.js`, `.c`). Only files with these extensions will be processed.
+- **--ignore-file-strings**: Ignore files and folders containing these strings. Useful for excluding specific files or directories.
+- **--ignore-hidden**: Ignore hidden directories and files (those starting with a dot).
+- **-v, --verbose**: Enable verbose mode to print additional information about skipped files.
+- **--no-comments**: Remove comments from the displayed content based on file type. This is especially useful for preparing code for automated analysis.
+- **--compress**: Compress code (for supported file types) to further optimize it for analysis.
+- **--path-contains**: Display files whose paths contain one of these strings. Useful for narrowing down the scan to specific parts of the directory structure.
+- **--content-contains**: Display files containing one of these strings in their content.
 
 ## ⚠️ Caution
 
-Exercise caution when scanning directories with large files. The script may produce extensive output. Always assess the data volume before executing the script.
+ARC is designed to prepare code for analysis by removing extraneous elements like comments. Exercise caution when scanning directories with large files, as the script may produce extensive output. Always assess the data volume before executing the script.
 
 ## 🤝 Contributing
 
@@ -86,4 +70,4 @@ This project is licensed under the GNU Affero General Public License v3.0. The c
 
 ## 🙏 Acknowledgements
 
-Special thanks to OpenAI's ChatGPT model for assistance. Dive deeper into the creation process [here](https://chat.openai.com/share/71e9bc9e-d34a-4b03-bf68-4f9e994d156a), [here](https://chat.openai.com/share/3fc66009-ff4e-425e-a4a3-fc703534885d), [here](https://chatgpt.com/share/d08724c6-8f65-4b24-9828-e0f895bd1e1d) and [here](https://chatgpt.com/share/674c665d-acf8-800f-bd42-5eb7bd566f1e).
+Special thanks to the community and tools like OpenAI's ChatGPT for assisting in the development process.
