@@ -1,4 +1,4 @@
-# Analysis-Ready Code (ARC)
+# 🤖👩‍🔬 Analysis-Ready Code (ARC)
 
 Analysis-Ready Code (ARC) is a Python-based utility designed to recursively scan directories and transform source code into a format optimized for AI and computer analysis. By stripping comments, filtering specific file types, and optionally compressing content, ARC ensures that your code is clean and ready for automated processing.
 
